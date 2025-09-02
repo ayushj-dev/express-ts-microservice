@@ -1,13 +1,14 @@
 import express from 'express';
-import router from './routes';
+import routes from './routes';
 import { errorHandler } from './middlewares/error-handler.middleware';
+import { CONFIG } from './config/config';
 
 const app = express();
 
-app.use("/", router);
+app.use(CONFIG.API_PREFIX, routes);
 
 app.use(errorHandler);
 
-app.listen(3000, () => {
-  console.log(`App running on port 3000`);
+app.listen(CONFIG.PORT, () => {
+  console.log(`App running on port ${CONFIG.PORT}`);
 });
