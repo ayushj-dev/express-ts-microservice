@@ -20,10 +20,15 @@ dotenv.config({
 export class AppConfig implements Config {
   private static _instance: AppConfig;
 
+  /* Express App related variables */
   public readonly NODE_ENV: Config['NODE_ENV'];
   public readonly IS_ENV_DEV: Config['IS_ENV_DEV'];
+  public readonly IS_ENV_EXAMPLE: Config['IS_ENV_EXAMPLE'];
   public readonly API_PREFIX: Config['API_PREFIX'];
   public readonly PORT: Config['PORT'];
+
+  /* Pino related variables */
+  public readonly LOG_LEVEL: Config['LOG_LEVEL'];
 
   /**
    * Private constructor to prevent direct instantiation
@@ -32,8 +37,12 @@ export class AppConfig implements Config {
     /* Express App related variables */
     this.NODE_ENV = env.NODE_ENV;
     this.IS_ENV_DEV = env.NODE_ENV === ConfigConstants.ENVS.DEV;
+    this.IS_ENV_EXAMPLE = env.NODE_ENV === ConfigConstants.ENVS.EXAMPLE;
     this.API_PREFIX = env.API_PREFIX;
     this.PORT = env.PORT;
+
+    /* Pino related variables */
+    this.LOG_LEVEL = env.LOG_LEVEL;
   }
 
   /**
