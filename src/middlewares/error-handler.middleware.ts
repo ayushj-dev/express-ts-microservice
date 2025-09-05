@@ -3,9 +3,11 @@ import { HttpStatus } from '@/constants/http-status.constants';
 import { HttpError } from '@/exceptions/base.exception';
 import { ZodError } from 'zod';
 import { logger } from '@/utils/logger.utils';
+import { getContext } from '@/context/context';
 
 export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   const statusCode = err instanceof HttpError ? err.statusCode : HttpStatus.INTERNAL_SERVER_ERROR;
+  const requestId = getContext('requestId') as string;
 
   let message = err.message ?? "Internal Server Error";
   let error = null;
@@ -23,6 +25,7 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
 
   res.status(statusCode).json({
     success: false,
+    request_id: requestId,
     message,
     data: null,
     error

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '@/utils/logger.utils';
+import { getContext } from '@/context/context';
 
 /**
  * Standard API response
@@ -20,6 +21,7 @@ type ApiResponseData = ApiResponse['data'] | null;
  */
 type StandardizedResponse = {
   success: boolean;
+  request_id: string;
   message: string;
   data: ApiResponseData;
   error: any | null;
@@ -40,14 +42,21 @@ export const responseMiddleware = (req: Request, res: Response, next: NextFuncti
       return originalJson.call(this, body);
     }
 
+    const requestId = getContext('requestId') as string;
+
     const standardizedResponse: StandardizedResponse = {
       success: true,
+      request_id: requestId,
       message: body.message ?? "Operation successful",
       data: body.data ?? null,
       error: null
     };
 
-    logger.info(standardizedResponse);
+    logger.info({
+      method: req.method,
+      url: req.originalUrl,
+      ...standardizedResponse
+    });
 
     /* We use `call(this, ...)` to ensure `this` context (which is `res`) is preserved. */
     return originalJson.call(this, standardizedResponse);
