@@ -1,28 +1,23 @@
-import express from 'express';
-import helmet from 'helmet';
-import cors from 'cors';
 import { CONFIG } from './config/config';
-import { requestMiddleware } from './middlewares/request.middleware';
-import { responseMiddleware } from './middlewares/response.middleware';
-import { errorHandler } from './middlewares/error-handler.middleware';
-import routes from './routes';
+import { logger } from './utils/logger.utils';
+import { createExpressApp } from './app/app';
 
-const app = express();
+/**
+ * Function to start the server once all the prerequisites are satisfied like connecting to dbs etc.
+ */
+const startServer = async () => {
+  try {
+    const app = createExpressApp();
 
-app.use(helmet());
-app.use(cors());
+    app.listen(CONFIG.PORT, () => {
+      console.log(`Server is running on port ${CONFIG.PORT} in ${CONFIG.NODE_ENV} mode`);
+    });
+  } catch (error) {
+    logger.error(error);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+    /* Stop the server if any error occurs at the time of boot */
+    process.exit(1);
+  }
+}
 
-app.use(requestMiddleware);
-
-app.use(responseMiddleware);
-
-app.use(CONFIG.API_PREFIX, routes);
-
-app.use(errorHandler);
-
-app.listen(CONFIG.PORT, () => {
-  console.log(`App running on port ${CONFIG.PORT}`);
-});
+startServer();
