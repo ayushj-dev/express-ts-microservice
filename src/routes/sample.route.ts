@@ -14,6 +14,7 @@ const sampleController = new SampleController(sampleService);
 
 sampleRouter.get('/validator-example', validateSchema(getSampleSchema), sampleController.getSample);
 sampleRouter.get('/mongoose', sampleController.getDocuments);
+sampleRouter.get('/postgres', sampleController.getSampleRows);
 
 /* Routes end here */
 
