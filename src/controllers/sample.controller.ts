@@ -37,4 +37,20 @@ export class SampleController {
       next(error);
     }
   }
+
+  getSampleRows = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await this.sampleService.getSampleRows();
+
+      res.status(HttpStatus.OK).json({
+        message: "Sample rows fetched successfully!",
+        data: {
+          meta: {},
+          result
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

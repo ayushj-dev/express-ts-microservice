@@ -22,8 +22,7 @@ export class AppConfig implements Config {
 
   /* Express App related variables */
   public readonly NODE_ENV: Config['NODE_ENV'];
-  public readonly IS_ENV_DEV: Config['IS_ENV_DEV'];
-  public readonly IS_ENV_EXAMPLE: Config['IS_ENV_EXAMPLE'];
+  public readonly IS_ENV_PROD: Config['IS_ENV_PROD'];
   public readonly API_PREFIX: Config['API_PREFIX'];
   public readonly PORT: Config['PORT'];
 
@@ -33,14 +32,23 @@ export class AppConfig implements Config {
   /* Mongo related variables */
   public readonly MONGO_URL: Config['MONGO_URL'];
 
+  /* SQL related variables */
+  public readonly POSTGRES_HOST: Config['POSTGRES_HOST'];
+  public readonly POSTGRES_PORT: Config['POSTGRES_PORT'];
+  public readonly POSTGRES_USER: Config['POSTGRES_USER'];
+  public readonly POSTGRES_PASSWORD: Config['POSTGRES_PASSWORD'];
+  public readonly POSTGRES_DATABASE: Config['POSTGRES_DATABASE'];
+  public readonly POSTGRES_MAX_POOL_CONNECTIONS: Config['POSTGRES_MAX_POOL_CONNECTIONS'];
+  public readonly POSTGRES_IDLE_TIMEOUT_MS: Config['POSTGRES_IDLE_TIMEOUT_MS'];
+  public readonly POSTGRES_CONNECTION_TIMEOUT_MS: Config['POSTGRES_CONNECTION_TIMEOUT_MS'];
+
   /**
    * Private constructor to prevent direct instantiation
    */
   private constructor(env: Config) {
     /* Express App related variables */
     this.NODE_ENV = env.NODE_ENV;
-    this.IS_ENV_DEV = env.NODE_ENV === ConfigConstants.ENVS.DEV;
-    this.IS_ENV_EXAMPLE = env.NODE_ENV === ConfigConstants.ENVS.EXAMPLE;
+    this.IS_ENV_PROD = env.NODE_ENV === ConfigConstants.ENVS.PROD;
     this.API_PREFIX = env.API_PREFIX;
     this.PORT = env.PORT;
 
@@ -49,6 +57,16 @@ export class AppConfig implements Config {
 
     /* Mongo related variables */
     this.MONGO_URL = env.MONGO_URL;
+
+    /* SQL related varialbes */
+    this.POSTGRES_HOST = env.POSTGRES_HOST;
+    this.POSTGRES_PORT = env.POSTGRES_PORT;
+    this.POSTGRES_USER = env.POSTGRES_USER;
+    this.POSTGRES_PASSWORD = env.POSTGRES_PASSWORD;
+    this.POSTGRES_DATABASE = env.POSTGRES_DATABASE;
+    this.POSTGRES_MAX_POOL_CONNECTIONS = env.POSTGRES_MAX_POOL_CONNECTIONS;
+    this.POSTGRES_IDLE_TIMEOUT_MS = env.POSTGRES_IDLE_TIMEOUT_MS;
+    this.POSTGRES_CONNECTION_TIMEOUT_MS = env.POSTGRES_CONNECTION_TIMEOUT_MS;
   }
 
   /**

@@ -12,7 +12,7 @@ class Logger {
 
     let transport: TransportSingleOptions | undefined;
 
-    if (CONFIG.IS_ENV_DEV || CONFIG.IS_ENV_EXAMPLE) {
+    if (!CONFIG.IS_ENV_PROD) {
       transport = {
         target: "pino-pretty",
         options: {
