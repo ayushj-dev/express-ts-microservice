@@ -13,6 +13,7 @@ const sampleController = new SampleController(sampleService);
 /* Routes start here */
 
 sampleRouter.get('/validator-example', validateSchema(getSampleSchema), sampleController.getSample);
+sampleRouter.get('/mongoose', sampleController.getDocuments);
 
 /* Routes end here */
 

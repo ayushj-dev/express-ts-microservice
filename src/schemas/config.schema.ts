@@ -17,5 +17,8 @@ export const ConfigSchema = z.object({
     .transform(Number),
 
   /* Pino related variables */
-  LOG_LEVEL: z.custom<Level>()
+  LOG_LEVEL: z.custom<Level>(),
+
+  /* Mongo related variables */
+  MONGO_URL: z.string()
 });

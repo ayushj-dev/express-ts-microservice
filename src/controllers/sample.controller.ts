@@ -21,4 +21,20 @@ export class SampleController {
       next(error);
     }
   }
+
+  getDocuments = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await this.sampleService.getDocuments();
+
+      res.status(HttpStatus.OK).json({
+        message: "Sample documents fetched successfully!",
+        data: {
+          meta: {},
+          result
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
