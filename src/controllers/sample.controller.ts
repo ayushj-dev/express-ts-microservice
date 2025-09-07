@@ -53,4 +53,20 @@ export class SampleController {
       next(error);
     }
   }
+
+  getValue = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await this.sampleService.getValue();
+
+      res.status(HttpStatus.OK).json({
+        message: "Value from redis fetched successfully!",
+        data: {
+          meta: {},
+          result
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

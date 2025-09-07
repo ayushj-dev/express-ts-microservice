@@ -1,5 +1,6 @@
 import { Mongo } from "@/constants/mongo.constants";
 import { mongoClient } from "@/db/no-sql/mongo-client";
+import { redis } from "@/db/redis/redis";
 import { db } from "@/db/sql";
 import { sampleTable } from "@/db/sql/schemas/sample.schema";
 import { InternalServerError } from "@/exceptions";
@@ -35,6 +36,17 @@ export class SampleService {
             eq(sampleTable.is_deleted, false)
           )
         );
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw new InternalServerError();
+    }
+  }
+
+  async getValue() {
+    try {
+      const result = await redis.get("test_key");
 
       return result;
     } catch (err) {
