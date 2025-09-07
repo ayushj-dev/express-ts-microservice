@@ -30,6 +30,9 @@ export class AppConfig implements Config {
   /* Pino related variables */
   public readonly LOG_LEVEL: Config['LOG_LEVEL'];
 
+  /* Mongo related variables */
+  public readonly MONGO_URL: Config['MONGO_URL'];
+
   /**
    * Private constructor to prevent direct instantiation
    */
@@ -43,6 +46,9 @@ export class AppConfig implements Config {
 
     /* Pino related variables */
     this.LOG_LEVEL = env.LOG_LEVEL;
+
+    /* Mongo related variables */
+    this.MONGO_URL = env.MONGO_URL;
   }
 
   /**

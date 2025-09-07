@@ -1,5 +1,6 @@
 import { CONFIG } from './config/config';
 import { logger } from './utils/logger.utils';
+import { mongoClient } from './db/no-sql/mongo-client';
 import { createExpressApp } from './app/app';
 
 /**
@@ -7,6 +8,10 @@ import { createExpressApp } from './app/app';
  */
 const startServer = async () => {
   try {
+    /* Initialize DB connections first */
+    await mongoClient.asPromise();
+    logger.info(`Mongo DB client connected successfully!`);
+
     const app = createExpressApp();
 
     app.listen(CONFIG.PORT, () => {
