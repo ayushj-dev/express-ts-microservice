@@ -42,6 +42,12 @@ export class AppConfig implements Config {
   public readonly POSTGRES_IDLE_TIMEOUT_MS: Config['POSTGRES_IDLE_TIMEOUT_MS'];
   public readonly POSTGRES_CONNECTION_TIMEOUT_MS: Config['POSTGRES_CONNECTION_TIMEOUT_MS'];
 
+  /* Redis related variables */
+  public readonly REDIS_HOST: Config['REDIS_HOST'];
+  public readonly REDIS_PORT: Config['REDIS_PORT'];
+  public readonly REDIS_USER: Config['REDIS_USER'];
+  public readonly REDIS_PASSWORD: Config['REDIS_PASSWORD'];
+
   /**
    * Private constructor to prevent direct instantiation
    */
@@ -58,7 +64,7 @@ export class AppConfig implements Config {
     /* Mongo related variables */
     this.MONGO_URL = env.MONGO_URL;
 
-    /* SQL related varialbes */
+    /* SQL related variables */
     this.POSTGRES_HOST = env.POSTGRES_HOST;
     this.POSTGRES_PORT = env.POSTGRES_PORT;
     this.POSTGRES_USER = env.POSTGRES_USER;
@@ -67,6 +73,12 @@ export class AppConfig implements Config {
     this.POSTGRES_MAX_POOL_CONNECTIONS = env.POSTGRES_MAX_POOL_CONNECTIONS;
     this.POSTGRES_IDLE_TIMEOUT_MS = env.POSTGRES_IDLE_TIMEOUT_MS;
     this.POSTGRES_CONNECTION_TIMEOUT_MS = env.POSTGRES_CONNECTION_TIMEOUT_MS;
+
+    /* Redis related variables */
+    this.REDIS_HOST = env.REDIS_HOST;
+    this.REDIS_PORT = env.REDIS_PORT;
+    this.REDIS_USER = env.REDIS_USER;
+    this.REDIS_PASSWORD = env.REDIS_PASSWORD;
   }
 
   /**
