@@ -17,6 +17,7 @@ export const ConfigSchema = z.object({
   /* Express App related variables */
   NODE_ENV: z.enum(ENVS),
   IS_ENV_PROD: z.boolean().optional(),
+  SERVICE_NAME: z.string(),
   API_PREFIX: z.string().refine(val => val.startsWith('/'), { message: "API_PREFIX must start with /" }),
   PORT: z.string()
     .length(4, { message: Errors.PORT.LENGTH })
@@ -55,5 +56,13 @@ export const ConfigSchema = z.object({
     .regex(/^\d+$/, { message: Errors.PORT.REGEX })
     .transform(Number),
   REDIS_USER: z.string(),
-  REDIS_PASSWORD: z.string()
+  REDIS_PASSWORD: z.string(),
+
+  /* Kafka related variables */
+  KAFKA_BROKERS: z.string()
+    .refine(
+      val => val.split(',').every((broker) => /^([a-zA-Z0-9.-]+):([0-9]{1,5})$/.test(broker.trim())),
+      { message: 'KAFKA_BROKERS must be a comma-separated list of valid broker addresses like "localhost:9092"' }
+    )
+    .transform(val => val.split(',').map((broker) => broker.trim())),
 });

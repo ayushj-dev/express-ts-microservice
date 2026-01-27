@@ -1,7 +1,9 @@
-import { Server } from 'http';
-import { mongoClient } from '../db/no-sql/mongo-client';
+import type { Server } from 'node:http';
+import { mongoClient } from '@/db/no-sql/mongo-client';
+import { sampleConsumer } from '@/kafka/consumers/sample.consumer';
+import { kafkaProducer } from '@/kafka/producer';
+import { getActiveRequestCount, initiateShutdown, isAppShuttingdown } from '@/middlewares/request.middleware';
 import { logger } from '@/utils/logger.utils';
-import { initiateShutdown, getActiveRequestCount, isAppShuttingdown } from '@/middlewares/request.middleware';
 
 /**
  * Graceful shutdown handler
@@ -34,6 +36,10 @@ export const setupGracefulShutdown = (server: Server) => {
       // Close DB connection
       await mongoClient.close();
       logger.info('MongoDB client disconnected.');
+
+      await kafkaProducer.disconnect();
+
+      await sampleConsumer.stop();
 
       logger.info('\n-------- APP SHUTDOWN SUCCESSFULLY --------\n');
       process.exit(0);

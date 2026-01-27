@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { SampleController } from '@/controllers/sample.controller';
-import { SampleService } from '@/services/sample.service';
 import { validateSchema } from '@/middlewares/schema-validator.middleware';
 import { getSampleSchema } from '@/schemas/sample.schema';
+import { SampleService } from '@/services/sample.service';
 
 const sampleRouter = Router();
 
@@ -16,6 +16,7 @@ sampleRouter.get('/validator-example', validateSchema(getSampleSchema), sampleCo
 sampleRouter.get('/mongoose', sampleController.getDocuments);
 sampleRouter.get('/postgres', sampleController.getSampleRows);
 sampleRouter.get('/redis', sampleController.getValue);
+sampleRouter.get('/kafka-producer', sampleController.sendEvent);
 
 /* Routes end here */
 

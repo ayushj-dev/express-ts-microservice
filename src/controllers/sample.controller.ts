@@ -69,4 +69,20 @@ export class SampleController {
       next(error);
     }
   }
+
+  sendEvent = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await this.sampleService.sendEvent();
+
+      res.status(HttpStatus.OK).json({
+        message: "Kafka event sent successfully!",
+        data: {
+          meta: {},
+          result
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
