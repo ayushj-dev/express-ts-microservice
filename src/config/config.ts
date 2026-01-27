@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
+import type z from 'zod';
 import { Config as ConfigConstants } from "@/constants/config.constants";
 import { InternalServerError } from "@/exceptions";
 import { ConfigSchema } from '@/schemas/config.schema';
-import z from 'zod';
 
 type Config = z.infer<typeof ConfigSchema>;
 
@@ -23,6 +23,7 @@ export class AppConfig implements Config {
   /* Express App related variables */
   public readonly NODE_ENV: Config['NODE_ENV'];
   public readonly IS_ENV_PROD: Config['IS_ENV_PROD'];
+  public readonly SERVICE_NAME: Config['SERVICE_NAME'];
   public readonly API_PREFIX: Config['API_PREFIX'];
   public readonly PORT: Config['PORT'];
 
@@ -48,6 +49,9 @@ export class AppConfig implements Config {
   public readonly REDIS_USER: Config['REDIS_USER'];
   public readonly REDIS_PASSWORD: Config['REDIS_PASSWORD'];
 
+  /* Kafka related variables */
+  public readonly KAFKA_BROKERS: Config['KAFKA_BROKERS'];
+
   /**
    * Private constructor to prevent direct instantiation
    */
@@ -55,6 +59,7 @@ export class AppConfig implements Config {
     /* Express App related variables */
     this.NODE_ENV = env.NODE_ENV;
     this.IS_ENV_PROD = env.NODE_ENV === ConfigConstants.ENVS.PROD;
+    this.SERVICE_NAME = env.SERVICE_NAME;
     this.API_PREFIX = env.API_PREFIX;
     this.PORT = env.PORT;
 
@@ -79,6 +84,9 @@ export class AppConfig implements Config {
     this.REDIS_PORT = env.REDIS_PORT;
     this.REDIS_USER = env.REDIS_USER;
     this.REDIS_PASSWORD = env.REDIS_PASSWORD;
+
+    /* Kafka related variables */
+    this.KAFKA_BROKERS = env.KAFKA_BROKERS;
   }
 
   /**
